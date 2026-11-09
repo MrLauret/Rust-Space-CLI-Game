@@ -1,6 +1,7 @@
 pub enum Rol {
     Medico = 0,
-    Ingeniero = 1
+    Ingeniero = 1,
+    Capitan = 2,
 }
 
 pub enum Estado {
@@ -12,6 +13,17 @@ pub enum Estado {
 pub struct Tripulante {
     pub nombre: String,
     pub rol: Rol,
-    pub salud: u32,
+    pub salud: u8,
     pub estado: Estado
+}
+
+impl Tripulante {
+    pub fn from(nombre: String, rol: Rol) -> Tripulante {
+        Tripulante {
+            nombre: nombre,
+            rol: rol,
+            salud: 100,
+            estado: Estado::Activo,
+        }
+    }
 }
