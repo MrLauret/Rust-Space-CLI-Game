@@ -2,8 +2,8 @@ use crate::models::nave::Nave;
 use std::io;
 use crate::utils::consola;
 
-const MENU_TEXT: &str = "
-===== MISSION CONTROL =====
+const MENU_TEXT: &str =
+"===== MISSION CONTROL =====
 1. Ver estado de la nave
 2. Ver tripulación
 3. Consultar destino
@@ -44,7 +44,6 @@ impl Motor {
 
             match input_sano {
                 0 => {
-                    consola::limpiar_consola();
                     println!("===Mision cancelada===");
                     break
                 },

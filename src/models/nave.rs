@@ -52,7 +52,7 @@ impl Nave {
         println!("+Combustible:    {}", self.combustible);
         println!("+Oxigeno:        {}", self.oxigeno);
         println!("+Integridad:     {}", self.integridad);
-        println!("+Estado general: {}", self.estado_general);
+        println!("+Estado general: {}\n", self.estado_general);
         consola::enter_para_continuar()
     }
 }
