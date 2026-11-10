@@ -105,6 +105,7 @@ impl Motor {
                     break
                 },
                 1 => {self.nave.ver_estado()},
+                6 => {self.guardar_datos(); consola::limpiar_consola(); println!("Partida guardada");}
                 7 => {self.cargar_into(); consola::limpiar_consola(); println!("Partida cargada");}
                 _ => {
                     println!("-Escribe un número válido-");

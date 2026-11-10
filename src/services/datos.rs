@@ -1,7 +1,42 @@
+use serde::Serialize;
+use serde_json::Serializer;
+use std::io::BufWriter;
 use crate::services::motor_mision::Motor;
-use std::{fs::{self, File}, io::Read, string};
+use std::{fs::{self, File}, io::{Read}};
+use std::io;
+use crate::utils::consola;
 
 impl Motor {
+    pub fn guardar_datos(&self) {
+        let mut input = String::new();
+
+        consola::limpiar_consola();
+        println!("===== GUARDAR DATOS =====");
+        println!("0. Salir");
+        println!("+ Nombre del archivo al que se va a guardar");
+
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Fallo al leer");
+
+        if input == "0".to_string() {
+            return;
+        }
+
+        let ruta = format!("saves/{input}.json");
+        
+        let file = File::create(&ruta)
+            .map_err(|e| format!("No se pudo crear el archivo {}: {}", ruta, e))
+            .expect("No se pudo crear el archivo");
+        
+        let writer = BufWriter::new(file);
+        let mut serializer = Serializer::new(writer);
+        
+        self.serialize(&mut serializer)
+            .map_err(|e| format!("Error de serialización: {e}"))
+            .expect("Error de serialización");
+    }
+
     pub fn cargar_datos(path: String) -> Result<Motor, String>{
         let mut file = match File::open(path) {
             Err(_) => return Err("Partida no encontrada".to_string()),
