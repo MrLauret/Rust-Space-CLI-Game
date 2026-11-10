@@ -1,6 +1,7 @@
 use crate::models::nave::Nave;
-use std::io;
+use crate::models::planeta::Planeta;
 use crate::utils::consola;
+use std::io;
 
 const MENU_TEXT: &str =
 "===== MISSION CONTROL =====
@@ -15,12 +16,16 @@ const MENU_TEXT: &str =
 ";
 
 pub struct Motor {
-    pub nave: Nave
+    pub nave: Nave,
+    pub planetas: Vec<Planeta>
 }
 
 impl Motor {
     pub fn new() -> Motor {
-        Motor { nave: Nave::new() }
+        Motor {
+            nave: Nave::new(),
+            planetas: Planeta::start()
+        }
     }
 
     pub fn start(&self) {
@@ -44,7 +49,7 @@ impl Motor {
 
             match input_sano {
                 0 => {
-                    println!("===Mision cancelada===");
+                    println!("===Mision Cancelada===");
                     break
                 },
                 1 => {self.nave.ver_estado()}
