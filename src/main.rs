@@ -5,7 +5,7 @@ pub mod services;
 use services::motor_mision::Motor;
 
 fn main() {
-    let motor = Motor::new();
+    let mut motor = Motor::new();
     
     motor.start();
 }

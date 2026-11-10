@@ -1,17 +1,21 @@
 use crate::models::tripulante::{Rol, Tripulante};
 use crate::utils::consola;
+use serde::{Serialize, Deserialize};
 
+#[derive(Serialize, Deserialize, Debug)]
 pub enum Estado {
     Bueno = 0,
     Medio = 1,
     Malo = 2
 }
 
+#[derive(Serialize, Deserialize, Debug)]
 pub enum Escudo {
     Operativo = 0,
     Desactivado = 1,
 }
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Nave {
     pub combustible: u8,
     pub oxigeno: u8,

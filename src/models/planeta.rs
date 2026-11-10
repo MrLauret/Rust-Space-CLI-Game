@@ -1,29 +1,33 @@
-use std::{range, vec};
+use serde::{Serialize, Deserialize};
+use rand::{RngExt};
 
-use rand::{RngExt, rng, seq::IndexedRandom};
-
+#[derive(Serialize, Deserialize, Debug)]
 pub enum Temperatura {
     Segura = 0,
     Peligrosa = 1
 }
 
+#[derive(Serialize, Deserialize, Debug)]
 pub enum Atmosfera {
     Respirable = 0,
     NoRespirable = 1
 }
 
+#[derive(Serialize, Deserialize, Debug)]
 pub enum Radiacion {
     Baja = 0,
     Media = 1,
     Alta = 2
 }
 
+#[derive(Serialize, Deserialize, Debug)]
 pub enum Recurso {
     Combustible = 0,
     Alimento = 1,
     Minerales = 2
 }
 
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Planeta {
     pub atmosfera: Atmosfera,
     pub temperatura: Temperatura,
