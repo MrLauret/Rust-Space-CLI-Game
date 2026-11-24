@@ -53,12 +53,21 @@ impl EventInfo {
 
 impl GameState {
     pub fn guardar_datos(&self) {
-        let mut input = String::new();
-
         consola::limpiar_consola();
-        println!("===== GUARDAR DATOS =====");
+        let mut input = String::new();
+        let partidas = match GameState::leer_partidas() {
+            Err(e) => {println!("{e}"); return;},
+            Ok(v) => v
+        };
+
+        let mut count = 0;
+        println!("===== CARGAR PARTIDA =====");
+        for partida in partidas.into_iter() {
+            count += 1;
+            println!("{count}. {}", partida.trim_end_matches(".json"))
+        }
         println!("0. Salir");
-        println!("+ Nombre del archivo al que se va a guardar");
+        println!("+ Nombre del archivo al que se va a guardar (Si no coincide con ninguna se guarda en una partida nueva)");
 
         io::stdin()
             .read_line(&mut input)
@@ -86,6 +95,9 @@ impl GameState {
         self.serialize(&mut serializer)
             .map_err(|e| format!("Error de serialización: {e}"))
             .expect("Error de serialización");
+        
+        println!("Partida guardada");
+        consola::enter_para_continuar();
     }
 
     pub fn cargar_datos(path: String) -> Result<GameState, String>{
@@ -105,6 +117,59 @@ impl GameState {
         };
 
         Ok(game_data)
+    }
+
+    pub fn cargar_into(&mut self) {
+        let partida: u32;
+        let partidas = match GameState::leer_partidas() {
+            Err(e) => {println!("{e}"); return;},
+            Ok(v) => v
+        };
+
+        loop {
+            let mut count = 0;
+            consola::limpiar_consola();
+            println!("===== CARGAR PARTIDA =====");
+            for partida in partidas.clone().into_iter() {
+                count += 1;
+                println!("{count}. {}", partida.trim_end_matches(".json"))
+            }
+            println!("0. Salir");
+
+            let mut input = String::new();
+            
+            io::stdin()
+                .read_line(&mut input)
+                .expect("Fallo al leer");
+
+            let input_sano: u32 = match input.trim().parse() {
+                Ok(i) => i,
+                Err(_) => {
+                    println!("-Escribe un número válido-");
+                    consola::enter_para_continuar();
+                    continue;
+                }
+            };
+
+            if input_sano == 0 {
+                return;
+            }
+
+            partida = input_sano;
+            break;
+        }
+        let partida_seleccionada = &partidas[(partida - 1) as usize];
+        let path = format!("saves/{partida_seleccionada}");
+        let partida_cargada: GameState = match GameState::cargar_datos(path) {
+            Err(e) => {println!("{e}"); return;},
+            Ok(p) => p
+        };
+
+        self.nave = partida_cargada.nave;
+        self.planetas = partida_cargada.planetas;
+
+        println!("Partida cargada");
+        consola::enter_para_continuar();
     }
 
     pub fn leer_partidas() -> Result<Vec<String>, String> {
