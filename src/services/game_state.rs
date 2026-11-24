@@ -17,14 +17,14 @@ const MENU_TEXT: &str =
 ";
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct Motor {
+pub struct GameState {
     pub nave: Nave,
     pub planetas: Vec<Planeta>
 }
 
-impl Motor {
-    pub fn new() -> Motor {
-        Motor {
+impl GameState {
+    pub fn new() -> GameState {
+        GameState {
             nave: Nave::new(),
             planetas: Planeta::start()
         }
@@ -32,7 +32,7 @@ impl Motor {
 
     pub fn cargar_into(&mut self) {
         let partida: u32;
-        let partidas = match Motor::leer_partidas() {
+        let partidas = match GameState::leer_partidas() {
             Err(e) => {println!("{e}"); return;},
             Ok(v) => v
         };
@@ -71,13 +71,13 @@ impl Motor {
         }
         let partida_seleccionada = &partidas[(partida - 1) as usize];
         let path = format!("saves/{partida_seleccionada}");
-        let motor_cargado: Motor = match Motor::cargar_datos(path) {
+        let partida_cargada: GameState = match GameState::cargar_datos(path) {
             Err(e) => {println!("{e}"); return;},
             Ok(p) => p
         };
 
-        self.nave = motor_cargado.nave;
-        self.planetas = motor_cargado.planetas
+        self.nave = partida_cargada.nave;
+        self.planetas = partida_cargada.planetas
     }
 
     pub fn start(&mut self) {

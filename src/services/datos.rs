@@ -1,12 +1,12 @@
 use serde::Serialize;
 use serde_json::Serializer;
 use std::io::BufWriter;
-use crate::services::motor_mision::Motor;
+use crate::services::game_state::GameState;
 use std::{fs::{self, File}, io::{Read}};
 use std::io;
 use crate::utils::consola;
 
-impl Motor {
+impl GameState {
     pub fn guardar_datos(&self) {
         let mut input = String::new();
 
@@ -19,7 +19,13 @@ impl Motor {
             .read_line(&mut input)
             .expect("Fallo al leer");
 
+        let input = input.trim();
+
         if input == "0".to_string() {
+            return;
+        } if input == "".to_string() {
+            println!("- Debes poner un nombre a la partida");
+            consola::enter_para_continuar();
             return;
         }
 
@@ -37,7 +43,7 @@ impl Motor {
             .expect("Error de serialización");
     }
 
-    pub fn cargar_datos(path: String) -> Result<Motor, String>{
+    pub fn cargar_datos(path: String) -> Result<GameState, String>{
         let mut file = match File::open(path) {
             Err(_) => return Err("Partida no encontrada".to_string()),
             Ok(f) => {
@@ -48,12 +54,12 @@ impl Motor {
         let mut json_string = String::new();
         let _ = file.read_to_string(&mut json_string);
 
-        let motor_data: Motor = match serde_json::from_str(&json_string) {
+        let game_data: GameState = match serde_json::from_str(&json_string) {
             Err(_) => return Err("Partida no encontrada".to_string()),
             Ok(m) => m
         };
 
-        Ok(motor_data)
+        Ok(game_data)
     }
 
     pub fn leer_partidas() -> Result<Vec<String>, String> {

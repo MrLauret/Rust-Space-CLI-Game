@@ -2,10 +2,10 @@ pub mod models;
 pub mod utils;
 pub mod services;
 
-use services::motor_mision::Motor;
+use services::game_state::GameState;
 
 fn main() {
-    let mut motor = Motor::new();
+    let mut game = GameState::new();
     
-    motor.start();
+    game.start();
 }
