@@ -3,28 +3,28 @@ use rand::{RngExt};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Temperatura {
-    Segura = 0,
-    Peligrosa = 1
+    Segura,
+    Peligrosa
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Atmosfera {
-    Respirable = 0,
-    NoRespirable = 1
+    Respirable,
+    NoRespirable
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Radiacion {
-    Baja = 0,
-    Media = 1,
-    Alta = 2
+    Baja,
+    Media,
+    Alta
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Recurso {
-    Combustible = 0,
-    Alimento = 1,
-    Minerales = 2
+    Combustible,
+    Alimento,
+    Minerales
 }
 
 #[derive(Serialize, Deserialize, Debug)]

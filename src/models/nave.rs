@@ -4,15 +4,15 @@ use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Estado {
-    Bueno = 0,
-    Medio = 1,
-    Malo = 2
+    Bueno,
+    Medio,
+    Malo
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Escudo {
-    Operativo = 0,
-    Desactivado = 1,
+    Operativo,
+    Desactivado
 }
 
 #[derive(Serialize, Deserialize, Debug)]

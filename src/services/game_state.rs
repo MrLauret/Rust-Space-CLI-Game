@@ -1,6 +1,7 @@
 use crate::models::nave::Nave;
 use crate::models::planeta::Planeta;
 use crate::utils::consola;
+use crate::services::datos::{MisionInfo, EventInfo};
 use std::{io};
 use serde::{Serialize, Deserialize};
 
@@ -10,23 +11,28 @@ const MENU_TEXT: &str =
 2. Ver tripulación
 3. Consultar destino
 4. Continuar misión
-5. Consultar historial
-6. Guardar partida
-7. Cargar partida
+5. Consultar informe de la misión
+6. Consultar informe de eventos
+7. Guardar partida
+8. Cargar partida
 0. Salir
 ";
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct GameState {
     pub nave: Nave,
-    pub planetas: Vec<Planeta>
+    pub planetas: Vec<Planeta>,
+    pub mision_info: MisionInfo,
+    pub event_info: EventInfo
 }
 
 impl GameState {
     pub fn new() -> GameState {
         GameState {
             nave: Nave::new(),
-            planetas: Planeta::start()
+            planetas: Planeta::start(),
+            mision_info: MisionInfo::new(),
+            event_info: EventInfo::new()
         }
     }
 
