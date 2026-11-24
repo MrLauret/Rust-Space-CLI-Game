@@ -56,11 +56,9 @@ impl GameState {
             };
 
             match input_sano {
-                0 => {
-                    println!("===Mision Cancelada===");
-                    break
-                },
-                1 => {self.nave.ver_estado()},
+                0 => {println!("===Mision Cancelada==="); break}
+                1 => {self.nave.ver_estado()}
+                2 => {self.nave.ver_tripulacion();}
                 7 => {self.guardar_datos();}
                 8 => {self.cargar_into();}
                 _ => {

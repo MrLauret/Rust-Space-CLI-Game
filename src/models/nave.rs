@@ -1,6 +1,7 @@
 use crate::models::tripulante::{Rol, Tripulante};
-use crate::utils::consola;
+use crate::utils::consola::{enter_para_continuar, limpiar_consola};
 use serde::{Serialize, Deserialize};
+use std::{io};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum Estado {
@@ -43,21 +44,49 @@ impl Nave {
 
     pub fn comienzo_tripulacion() -> Vec<Tripulante> {
         vec![
-            Tripulante::from(String::from("Medico Medicalez"), Rol::Medico),
-            Tripulante::from(String::from("John I. Gieneria"), Rol::Ingeniero),
-            Tripulante::from(String::from("Capi Tan Rodriguez"), Rol::Capitan),
+            Tripulante::from(String::from("Medico Medicalez"), 1, Rol::Medico),
+            Tripulante::from(String::from("John I. Gieneria"), 2, Rol::Ingeniero),
+            Tripulante::from(String::from("Capi Tan Rodriguez"), 3, Rol::Capitan),
         ]
     }
 
     pub fn ver_estado(&self) {
-        consola::limpiar_consola();
+        limpiar_consola();
         println!("===ESTADO DE LA NAVE===");
         println!("+Escudos:        {}", self.escudos);
         println!("+Combustible:    {}", self.combustible);
         println!("+Oxigeno:        {}", self.oxigeno);
         println!("+Integridad:     {}", self.integridad);
         println!("+Estado general: {}\n", self.estado_general);
-        consola::enter_para_continuar()
+        enter_para_continuar()
+    }
+
+    pub fn ver_tripulacion(&mut self) {
+        limpiar_consola();
+        println!("===TRIPULACION===");
+        let mut input = String::new();
+        for tripulante in self.tripulantes.iter() {
+            println!("{}. {}", tripulante.id, tripulante.nombre);
+        }
+        println!("0. Salir");
+        println!("Escribe su id para ver al tripulante");
+
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Fallo al leer");
+
+        let input_fixed: u32 = match input.trim().parse() {
+            Err(_) => {
+                println!("- Solo se aceptan números");
+                enter_para_continuar();
+                return;
+            }
+            Ok(v) => v
+        };
+
+        if (0..3).contains(&input_fixed) {
+            Continuar Luego
+        }
     }
 }
 
