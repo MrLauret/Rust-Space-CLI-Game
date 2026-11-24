@@ -1,7 +1,7 @@
 use crate::models::nave::Nave;
 use crate::models::planeta::Planeta;
 use crate::utils::consola;
-use crate::services::datos::{MisionInfo, EventInfo};
+use crate::models::informes::{MisionInfo, EventInfo};
 use std::{io};
 use serde::{Serialize, Deserialize};
 
@@ -10,9 +10,9 @@ const MENU_TEXT: &str =
 1. Ver estado de la nave
 2. Ver tripulación
 3. Consultar destino
-4. Continuar misión
-5. Consultar informe de la misión
-6. Consultar informe de eventos
+4. Consultar planetas
+5. Informe de la misión
+6. Informe de eventos
 7. Guardar partida
 8. Cargar partida
 0. Salir
